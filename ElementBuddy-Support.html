@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ElementBuddy — Support & User Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ── Design tokens (from app palette) ──────────────────────────────── */
+  :root {
+    --dusk-blue:      #26547C;
+    --dusk-blue-mid:  #3A6E9F;
+    --dusk-blue-lt:   #D6E6F4;
+    --dusk-blue-xlt:  #EEF5FB;
+    --amaranth:       #DA3E52;
+    --emerald:        #06D6A0;
+    --golden:         #F2A541;
+    --khaki:          #BAA898;
+    --slate-indigo:   #6366A8;
+
+    --ink:            #1A1A2E;
+    --ink-60:         #5A5A72;
+    --ink-30:         #A8A8BC;
+    --surface:        #FFFFFF;
+    --surface-2:      #F6F8FB;
+    --border:         #DDE4EE;
+
+    --font:           'Nunito', system-ui, sans-serif;
+    --radius:         12px;
+    --radius-lg:      18px;
+  }
+
+  /* ── Reset & base ───────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--surface-2);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ─────────────────────────────────────────────────────────── */
+  .page-shell {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── Header ─────────────────────────────────────────────────────────── */
+  .site-header {
+    grid-column: 1 / -1;
+    background: var(--dusk-blue);
+    padding: 28px 48px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(38,84,124,.25);
+  }
+
+  .app-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 13px;
+    background: linear-gradient(145deg, #6366A8 0%, #26547C 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  }
+
+  .header-text { display: flex; flex-direction: column; gap: 2px; }
+
+  .header-text h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.3px;
+  }
+
+  .header-text p {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,.6);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── Sidebar nav ─────────────────────────────────────────────────────── */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 32px 0;
+    position: sticky;
+    top: 88px;
+    height: calc(100vh - 88px);
+    overflow-y: auto;
+    align-self: start;
+  }
+
+  .sidebar-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ink-30);
+    padding: 0 24px 12px;
+  }
+
+  .sidebar nav { display: flex; flex-direction: column; }
+
+  .sidebar a {
+    display: block;
+    padding: 9px 24px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ink-60);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: color .15s, border-color .15s, background .15s;
+  }
+
+  .sidebar a:hover {
+    color: var(--dusk-blue);
+    background: var(--dusk-blue-xlt);
+    border-left-color: var(--dusk-blue-lt);
+  }
+
+  .sidebar a.active {
+    color: var(--dusk-blue);
+    border-left-color: var(--dusk-blue);
+    background: var(--dusk-blue-xlt);
+  }
+
+  /* ── Main content ────────────────────────────────────────────────────── */
+  .main {
+    padding: 48px 56px 80px;
+    max-width: 820px;
+  }
+
+  /* ── Sections ────────────────────────────────────────────────────────── */
+  .doc-section {
+    margin-bottom: 56px;
+    scroll-margin-top: 112px;
+  }
+
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--dusk-blue-mid);
+    margin-bottom: 8px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 2px;
+    background: var(--dusk-blue);
+    border-radius: 2px;
+  }
+
+  h2.section-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.4px;
+    margin-bottom: 16px;
+    line-height: 1.25;
+  }
+
+  h3.subsection-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dusk-blue);
+    margin: 28px 0 8px;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    color: var(--ink-60);
+    margin-bottom: 12px;
+  }
+
+  /* ── Hero intro ──────────────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--dusk-blue) 0%, #1A3C5A 100%);
+    border-radius: var(--radius-lg);
+    padding: 40px 44px;
+    margin-bottom: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '⚛';
+    position: absolute;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 120px;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .hero h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    color: rgba(255,255,255,.7);
+    margin: 0;
+    max-width: 520px;
+    line-height: 1.65;
+  }
+
+  /* ── Callout box ─────────────────────────────────────────────────────── */
+  .callout {
+    background: var(--dusk-blue-xlt);
+    border-left: 3px solid var(--dusk-blue);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 14px 20px;
+    margin: 20px 0;
+    font-size: 0.875rem;
+    color: var(--dusk-blue);
+    font-weight: 500;
+    line-height: 1.6;
+  }
+
+  /* ── Category chips ──────────────────────────────────────────────────── */
+  .chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.775rem;
+    font-weight: 700;
+    border: 1.5px solid transparent;
+  }
+
+  .chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Bullet list ─────────────────────────────────────────────────────── */
+  ul.doc-list {
+    list-style: none;
+    margin: 8px 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  ul.doc-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 0.9375rem;
+    color: var(--ink-60);
+    line-height: 1.6;
+  }
+
+  ul.doc-list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--dusk-blue);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  ul.doc-list li strong { color: var(--ink); font-weight: 700; }
+
+  /* ── Card pages ──────────────────────────────────────────────────────── */
+  .card-pages {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .card-page {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card-page-num {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--dusk-blue);
+  }
+
+  .card-page-icon { font-size: 1.5rem; }
+
+  .card-page h4 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .card-page p {
+    font-size: 0.8rem;
+    color: var(--ink-60);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── Quiz types ──────────────────────────────────────────────────────── */
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .quiz-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .quiz-card .quiz-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--dusk-blue);
+    font-family: var(--font);
+    letter-spacing: 0.2px;
+  }
+
+  .quiz-card p {
+    font-size: 0.825rem;
+    color: var(--ink-60);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── FAQ ─────────────────────────────────────────────────────────────── */
+  .faq-item {
+    border-top: 1px solid var(--border);
+    padding: 20px 0;
+  }
+
+  .faq-item:last-child { border-bottom: 1px solid var(--border); }
+
+  .faq-item h3 {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .faq-item p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  /* ── Accessibility table ──────────────────────────────────────────────── */
+  .a11y-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .a11y-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+
+  .a11y-item h4 {
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--emerald);
+    margin-bottom: 6px;
+  }
+
+  .a11y-item p { font-size: 0.85rem; margin: 0; line-height: 1.5; }
+
+  /* ── Requirements pill row ───────────────────────────────────────────── */
+  .req-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .req-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 7px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .req-pill span { font-size: 1rem; }
+
+  /* ── Contact card ────────────────────────────────────────────────────── */
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .contact-card .contact-icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+  .contact-card h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .contact-card p { font-size: 0.9rem; max-width: 380px; margin: 0 auto; }
+
+  /* ── Responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 860px) {
+    .page-shell { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 32px 24px 64px; }
+    .card-pages { grid-template-columns: 1fr; }
+    .quiz-grid { grid-template-columns: 1fr; }
+    .a11y-grid { grid-template-columns: 1fr; }
+    .hero { padding: 28px 24px; }
+    .hero h2 { font-size: 1.5rem; }
+    .site-header { padding: 20px 24px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+
+  /* ── Focus styles ────────────────────────────────────────────────────── */
+  a:focus-visible {
+    outline: 2px solid var(--dusk-blue);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-shell">
+
+  <!-- ── Header ─────────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="app-icon">⚛️</div>
+    <div class="header-text">
+      <h1>ElementBuddy</h1>
+      <p>Support &amp; User Guide</p>
+    </div>
+  </header>
+
+  <!-- ── Sidebar ────────────────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Contents</div>
+    <nav>
+      <a href="#overview" class="active">Overview</a>
+      <a href="#getting-started">Getting Started</a>
+      <a href="#grid">Periodic Table Grid</a>
+      <a href="#detail-card">Element Detail Card</a>
+      <a href="#quiz">Quiz Mode</a>
+      <a href="#accessibility">Accessibility</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#data">Data Accuracy</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </aside>
+
+  <!-- ── Main ───────────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Hero -->
+    <div class="hero">
+      <h2>ElementBuddy</h2>
+      <p>An interactive periodic table reference for iPhone and iPad — covering all 118 elements with color-coded tiles, rich detail cards, and a built-in quiz mode.</p>
+    </div>
+
+    <!-- Overview -->
+    <section class="doc-section" id="overview">
+      <div class="section-eyebrow">Overview</div>
+      <h2 class="section-title">What is ElementBuddy?</h2>
+      <p>Elements is a periodic table reference designed for students, science enthusiasts, and anyone curious about the building blocks of matter. Browse the complete table, explore every element in depth, and test your knowledge — all in one beautifully designed app.</p>
+    </section>
+
+    <!-- Getting Started -->
+    <section class="doc-section" id="getting-started">
+      <div class="section-eyebrow">Getting Started</div>
+      <h2 class="section-title">First launch</h2>
+      <p>When you open the app, you'll see the periodic table grid. Each tile shows an element's symbol, atomic number, and name, color-coded by its category. Tap any tile to open its detail card.</p>
+    </section>
+
+    <!-- Grid -->
+    <section class="doc-section" id="grid">
+      <div class="section-eyebrow">Main View</div>
+      <h2 class="section-title">The Periodic Table Grid</h2>
+
+      <h3 class="subsection-title">Browsing the table</h3>
+      <p>The full 18-column periodic table layout is displayed by default. On iPhone in portrait, elements appear in an adaptive flow grid. Rotate to landscape to see the classic periodic table shape. On iPad, the full table shape is always shown.</p>
+
+      <h3 class="subsection-title">Tapping an element</h3>
+      <p>Tap any element tile to open its detail card. Swipe down on the card, or tap the × button, to close it.</p>
+
+      <h3 class="subsection-title">Filtering by category</h3>
+      <p>Tap the filter icon in the toolbar to highlight a specific element category. The selected category stays bright while all other tiles are dimmed — the table shape is preserved so you can see exactly where in the table that category appears. Tap the same category again, or choose "All Elements," to clear the filter.</p>
+
+      <div class="chip-grid">
+        <span class="chip" style="background:#FDEAEC; border-color:#DA3E52; color:#DA3E52;"><span class="chip-dot" style="background:#DA3E52;"></span>Alkali Metals</span>
+        <span class="chip" style="background:#FDF0EC; border-color:#E07A5F; color:#C0654B;"><span class="chip-dot" style="background:#E07A5F;"></span>Alkaline Earth</span>
+        <span class="chip" style="background:#EAF0F6; border-color:#26547C; color:#26547C;"><span class="chip-dot" style="background:#26547C;"></span>Transition Metals</span>
+        <span class="chip" style="background:#E6FAF5; border-color:#06D6A0; color:#059E77;"><span class="chip-dot" style="background:#06D6A0;"></span>Post-Transition</span>
+        <span class="chip" style="background:#F5F1EE; border-color:#BAA898; color:#8A7B6E;"><span class="chip-dot" style="background:#BAA898;"></span>Metalloids</span>
+        <span class="chip" style="background:#EEF6EE; border-color:#5FA85C; color:#4A844A;"><span class="chip-dot" style="background:#5FA85C;"></span>Nonmetals</span>
+        <span class="chip" style="background:#FEF6EC; border-color:#F2A541; color:#C07F1F;"><span class="chip-dot" style="background:#F2A541;"></span>Halogens</span>
+        <span class="chip" style="background:#EEEEFC; border-color:#6366A8; color:#4B4E8A;"><span class="chip-dot" style="background:#6366A8;"></span>Noble Gases</span>
+        <span class="chip" style="background:#FCF0F4; border-color:#DB6F92; color:#B04C6E;"><span class="chip-dot" style="background:#DB6F92;"></span>Lanthanides</span>
+        <span class="chip" style="background:#F5F0FA; border-color:#8267AE; color:#6248A0;"><span class="chip-dot" style="background:#8267AE;"></span>Actinides</span>
+      </div>
+
+      <h3 class="subsection-title">Searching</h3>
+      <p>Tap the search bar at the top and type an element name, symbol, or atomic number. Matching elements stay highlighted; non-matching tiles are dimmed so the table shape stays intact.</p>
+
+      <h3 class="subsection-title">Grid vs. list view</h3>
+      <p>Tap the view toggle in the toolbar to switch between the grid and a scrollable list. In list mode, the category filter narrows results rather than just highlighting them.</p>
+    </section>
+
+    <!-- Detail Card -->
+    <section class="doc-section" id="detail-card">
+      <div class="section-eyebrow">Element Info</div>
+      <h2 class="section-title">Element Detail Card</h2>
+      <p>Tapping an element opens a card with three pages. Swipe left/right, or tap the card, to move between them.</p>
+
+      <div class="card-pages">
+        <div class="card-page">
+          <div class="card-page-num">Page 1</div>
+          <div class="card-page-icon">🔤</div>
+          <h4>Symbol</h4>
+          <p>A large, bold view of the element's symbol and atomic number.</p>
+        </div>
+        <div class="card-page">
+          <div class="card-page-num">Page 2</div>
+          <div class="card-page-icon">📋</div>
+          <h4>Card</h4>
+          <p>Full properties: atomic mass, electron configuration, electrons per shell, state of matter, discovery year, and description.</p>
+        </div>
+        <div class="card-page">
+          <div class="card-page-num">Page 3</div>
+          <div class="card-page-icon">⚛️</div>
+          <h4>Atom</h4>
+          <p>An interactive Bohr model diagram showing the element's electron shells.</p>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Text-to-Speech</h3>
+      <p>On the detail card, tap the speaker icon to hear the element's name spoken aloud. Useful for learning correct pronunciations of less familiar element names.</p>
+    </section>
+
+    <!-- Quiz -->
+    <section class="doc-section" id="quiz">
+      <div class="section-eyebrow">Test Yourself</div>
+      <h2 class="section-title">Quiz Mode</h2>
+      <p>Tap the quiz button in the toolbar to open Quiz Mode. Choose from four question types:</p>
+
+      <div class="quiz-grid">
+        <div class="quiz-card">
+          <div class="quiz-label">Symbol → Name</div>
+          <p>Given an element's symbol, identify the element name.</p>
+        </div>
+        <div class="quiz-card">
+          <div class="quiz-label">Name → Symbol</div>
+          <p>Given an element's name, identify the correct chemical symbol.</p>
+        </div>
+        <div class="quiz-card">
+          <div class="quiz-label">Atomic Number</div>
+          <p>Match an element to its atomic number.</p>
+        </div>
+        <div class="quiz-card">
+          <div class="quiz-label">Category</div>
+          <p>Identify which category an element belongs to.</p>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Session length</h3>
+      <p>Before starting, choose how many questions you'd like: 5, 10, or 20. Your score is shown at the end of each session.</p>
+
+      <h3 class="subsection-title">Tips for studying</h3>
+      <ul class="doc-list">
+        <li>Start with <strong>Symbol → Name</strong> if you're a beginner — it's the most visual question type.</li>
+        <li>Use <strong>Category</strong> quizzes to reinforce where elements sit in the table.</li>
+        <li>Return to the grid after a quiz to look up any elements you missed.</li>
+      </ul>
+    </section>
+
+    <!-- Accessibility -->
+    <section class="doc-section" id="accessibility">
+      <div class="section-eyebrow">Accessibility</div>
+      <h2 class="section-title">Built for everyone</h2>
+
+      <div class="a11y-grid">
+        <div class="a11y-item">
+          <h4>VoiceOver</h4>
+          <p>All element tiles, cards, and quiz controls include descriptive labels. The grid announces each tile's name, symbol, and atomic number.</p>
+        </div>
+        <div class="a11y-item">
+          <h4>Dynamic Type</h4>
+          <p>Text scales throughout the app with your iOS text size setting.</p>
+        </div>
+        <div class="a11y-item">
+          <h4>Reduce Motion</h4>
+          <p>If Reduce Motion is enabled in iOS Settings, transition animations are simplified automatically.</p>
+        </div>
+        <div class="a11y-item">
+          <h4>Touch Targets</h4>
+          <p>All interactive elements meet Apple's recommended minimum tap target size.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Requirements -->
+    <section class="doc-section" id="requirements">
+      <div class="section-eyebrow">Compatibility</div>
+      <h2 class="section-title">Device &amp; OS Requirements</h2>
+
+      <div class="req-row">
+        <div class="req-pill"><span>📱</span> iPhone &amp; iPad</div>
+        <div class="req-pill"><span>🍎</span> iOS 17 or later</div>
+        <div class="req-pill"><span>🌗</span> Dark &amp; Light Mode</div>
+        <div class="req-pill"><span>🔄</span> All orientations</div>
+        <div class="req-pill"><span>📶</span> Works offline</div>
+      </div>
+    </section>
+
+    <!-- Data Accuracy -->
+    <section class="doc-section" id="data">
+      <div class="section-eyebrow">Data</div>
+      <h2 class="section-title">Data Accuracy</h2>
+      <p>All 118 elements and their properties — including atomic masses — have been reviewed against <strong>NIST SP 966 (June 2024)</strong>, the U.S. National Institute of Standards and Technology's official periodic table publication.</p>
+      <div class="callout">If you spot a discrepancy in element data, please contact us through the App Store support link.</div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="doc-section" id="faq">
+      <div class="section-eyebrow">FAQ</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <h3>Why does the grid dim elements when I filter?</h3>
+        <p>Dimming (rather than removing) non-matching elements preserves the periodic table's shape. The position of each element in the table is part of what the table communicates — hiding tiles would break that structure.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Why does the table look different in portrait vs. landscape on iPhone?</h3>
+        <p>In portrait, the full 18-column table is too wide to display at a legible size, so elements appear in an adaptive flow grid. Rotate to landscape to see the classic layout with all groups and periods in their correct positions.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I change the quiz question count mid-session?</h3>
+        <p>No — session length is chosen before you start. Close the quiz and start a new session to pick a different count.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does the app work offline?</h3>
+        <p>Yes. All element data is bundled with the app and works fully offline. No internet connection is required.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does the app contain ads?</h3>
+        <p>No. ElementBuddy is completely ad-free.</p>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="doc-section" id="contact">
+      <div class="section-eyebrow">Get in Touch</div>
+      <h2 class="section-title">Contact &amp; Support</h2>
+      <p>If you have a question, notice a data error, or want to share feedback, we'd love to hear from you.</p>
+      <div class="contact-card">
+        <div class="contact-icon">💬</div>
+        <h3>Leave a review or report an issue</h3>
+        <p>Use the App Store support link on the app's product page, or leave a review — we read every one.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('.doc-section');
+  const links = document.querySelectorAll('.sidebar a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
