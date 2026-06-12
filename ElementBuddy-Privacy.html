@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ElementBuddy — Privacy Policy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* ── Design tokens ──────────────────────────────────────────────────── */
+  :root {
+    --dusk-blue:     #26547C;
+    --dusk-mid:      #3A6E9F;
+    --dusk-lt:       #D6E6F4;
+    --dusk-xlt:      #EEF5FB;
+    --emerald:       #06D6A0;
+    --golden:        #F2A541;
+    --amaranth:      #DA3E52;
+
+    --ink:           #111827;
+    --ink-70:        #374151;
+    --ink-50:        #6B7280;
+    --ink-20:        #D1D5DB;
+    --surface:       #FFFFFF;
+    --surface-2:     #F8FAFC;
+    --border:        #E5E9EF;
+
+    --font-display:  'Nunito', system-ui, sans-serif;
+    --font-body:     'Nunito Sans', system-ui, sans-serif;
+    --radius:        10px;
+    --radius-lg:     16px;
+
+    --max-w:         720px;
+  }
+
+  /* ── Reset ──────────────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--surface-2);
+    color: var(--ink-70);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Page shell ─────────────────────────────────────────────────────── */
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header bar ─────────────────────────────────────────────────────── */
+  .site-header {
+    background: var(--dusk-blue);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 12px rgba(38,84,124,.22);
+  }
+
+  .app-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    background: linear-gradient(145deg, #6366A8 0%, #26547C 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 6px rgba(0,0,0,.25);
+  }
+
+  .site-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .site-header-text strong {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.2px;
+  }
+
+  .site-header-text span {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,.55);
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
+  .header-link {
+    margin-left: auto;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255,255,255,.7);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 100px;
+    transition: background .15s, color .15s;
+  }
+
+  .header-link:hover {
+    background: rgba(255,255,255,.12);
+    color: #fff;
+  }
+
+  /* ── Hero ───────────────────────────────────────────────────────────── */
+  .hero {
+    background: var(--dusk-blue);
+    padding: 56px 32px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Atom rings — decorative, muted */
+  .hero-rings {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    height: 320px;
+    pointer-events: none;
+    opacity: 0.07;
+  }
+
+  .hero-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: rgba(255,255,255,.75);
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--emerald);
+    flex-shrink: 0;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,.6);
+    font-weight: 500;
+  }
+
+  .hero-meta-item strong {
+    color: rgba(255,255,255,.88);
+    font-weight: 700;
+  }
+
+  /* ── Divider wave between hero and body ─────────────────────────────── */
+  .hero-wave {
+    display: block;
+    background: var(--dusk-blue);
+    line-height: 0;
+  }
+
+  .hero-wave svg {
+    display: block;
+    width: 100%;
+  }
+
+  /* ── Content area ───────────────────────────────────────────────────── */
+  .content-wrap {
+    flex: 1;
+    padding: 0 32px 80px;
+  }
+
+  .content {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding-top: 48px;
+  }
+
+  /* ── Intro block ────────────────────────────────────────────────────── */
+  .intro {
+    background: var(--dusk-xlt);
+    border-left: 3px solid var(--dusk-blue);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 18px 22px;
+    margin-bottom: 48px;
+    font-size: 0.9375rem;
+    color: var(--dusk-blue);
+    line-height: 1.7;
+    font-weight: 500;
+  }
+
+  /* ── Policy sections ─────────────────────────────────────────────────── */
+  .policy-section {
+    margin-bottom: 44px;
+    padding-bottom: 44px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .policy-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .section-num {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--dusk-blue);
+    background: var(--dusk-xlt);
+    border: 1px solid var(--dusk-lt);
+    border-radius: 6px;
+    padding: 3px 9px;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  .policy-section h2 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.2px;
+    line-height: 1.3;
+  }
+
+  .policy-section p {
+    font-size: 0.9375rem;
+    color: var(--ink-50);
+    line-height: 1.78;
+    margin-bottom: 12px;
+  }
+
+  .policy-section p:last-child { margin-bottom: 0; }
+
+  .policy-section p strong {
+    color: var(--ink-70);
+    font-weight: 600;
+  }
+
+  /* ── Highlight box (for "we collect nothing" emphasis) ───────────────── */
+  .highlight-box {
+    background: #EDFBF6;
+    border: 1.5px solid var(--emerald);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .highlight-box-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+
+  .highlight-box p {
+    font-size: 0.9rem;
+    color: #0B6647;
+    font-weight: 600;
+    margin: 0 !important;
+    line-height: 1.6;
+  }
+
+  /* ── Simple list ─────────────────────────────────────────────────────── */
+  ul.policy-list {
+    list-style: none;
+    margin: 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  ul.policy-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 0.9375rem;
+    color: var(--ink-50);
+    line-height: 1.65;
+  }
+
+  ul.policy-list li::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--dusk-blue);
+    margin-top: 9px;
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ─────────────────────────────────────────────────────────── */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--dusk-blue);
+  }
+
+  .footer-brand-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: linear-gradient(145deg, #6366A8 0%, #26547C 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-50);
+    text-decoration: none;
+    transition: color .15s;
+  }
+
+  .footer-links a:hover { color: var(--dusk-blue); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--ink-20);
+    width: 100%;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .site-header { padding: 14px 20px; }
+    .hero { padding: 40px 20px 52px; }
+    .content-wrap { padding: 0 20px 60px; }
+    .contact-card { flex-direction: column; gap: 14px; padding: 22px; }
+    .hero-rings { display: none; }
+    .site-footer { padding: 20px; }
+    .header-link { display: none; }
+    .footer-copy { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--dusk-blue);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Header ───────────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="app-icon">⚛️</div>
+    <div class="site-header-text">
+      <strong>ElementBuddy</strong>
+      <span>Privacy Policy</span>
+    </div>
+    <a href="index.html" class="header-link">Support Guide →</a>
+  </header>
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <div class="hero">
+    <svg class="hero-rings" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="160" cy="160" rx="140" ry="55" stroke="white" stroke-width="2"/>
+      <ellipse cx="160" cy="160" rx="140" ry="55" stroke="white" stroke-width="2" transform="rotate(60 160 160)"/>
+      <ellipse cx="160" cy="160" rx="140" ry="55" stroke="white" stroke-width="2" transform="rotate(120 160 160)"/>
+      <circle cx="160" cy="160" r="16" fill="white"/>
+      <circle cx="300" cy="160" r="6" fill="white"/>
+      <circle cx="90" cy="68" r="6" fill="white"/>
+      <circle cx="90" cy="252" r="6" fill="white"/>
+    </svg>
+
+    <div class="hero-inner">
+      <div class="hero-badge">Legal</div>
+      <h1>Privacy Policy</h1>
+      <div class="hero-meta">
+        <div class="hero-meta-item">App: <strong>ElementBuddy</strong></div>
+        <div class="hero-meta-item">Effective: <strong>June 11, 2026</strong></div>
+        <div class="hero-meta-item">Last updated: <strong>June 11, 2026</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Wave divider ──────────────────────────────────────────────────── -->
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 40" preserveAspectRatio="none" height="40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 L0,20 Q360,0 720,20 Q1080,40 1440,20 L1440,40 Z" fill="#F8FAFC"/>
+    </svg>
+  </div>
+
+  <!-- ── Content ───────────────────────────────────────────────────────── -->
+  <div class="content-wrap">
+    <div class="content">
+
+      <p class="intro">
+        ElementBuddy is built with your privacy as a default, not an afterthought. This policy explains what information the app does and does not collect, and how it handles your data.
+      </p>
+
+      <!-- 1 -->
+      <section class="policy-section">
+        <div class="section-header">
+          <span class="section-num">01</span>
+          <h2>Information We Collect</h2>
+        </div>
+
+        <div class="highlight-box">
+          <span class="highlight-box-icon">✓</span>
+          <p>ElementBuddy does not collect, transmit, or store any personal information. No account is required to use the app.</p>
+        </div>
+
+        <p>The app operates entirely on your device. Your quiz scores, session history, and any preferences you set remain local to your iPhone or iPad and are never sent to any server.</p>
+      </section>
+
+      <!-- 2 -->
+      <section class="policy-section">
+        <div class="section-header">
+          <span class="section-num">02</span>
+          <h2>Data Stored on Your Device</h2>
+        </div>
+        <p>ElementBuddy stores a small amount of data locally on your device using iOS standard storage. This includes:</p>
+        <ul class="policy-list">
+          <li>Your cumulative quiz completion count, used only to determine when to show an App Store review prompt.</li>
+          <li>Which app version last triggered a review prompt, to avoid prompting you repeatedly.</li>
+        </ul>
+        <p>This data never leaves your device and is cleared if you delete the app.</p>
+      </section>
+
+      <!-- 3 -->
+      <section class="policy-section">
+        <div class="section-header">
+          <span class="section-num">03</span>
+          <h2>Analytics &amp; Crash Reporting</h2>
+        </div>
+        <p>ElementBuddy does not integrate any third-party analytics, tracking SDKs, or crash reporting services. No usage data, event logs, or diagnostic information is collected or transmitted by the app.</p>
+      </section>
+
+      <!-- 4 -->
+      <section class="policy-section">
+        <div class="section-header">
+          <span class="section-num">04</span>
+          <h2>Text-to-Speech</h2>
+        </div>
+        <p>ElementBuddy includes a text-to-speech feature that reads element names aloud using Apple's built-in <strong>AVSpeechSynthesizer</strong> framework. This feature runs entirely on-device. No audio is recorded, stored, or transmitted.</p>
+      </section>
+
+      <!-- 5 -->
+      <section class="policy-section">
+        <div class="section-header">
+          <span class="section-num">05</span>
+          <h2>Advertising</h2>
+        </div>
+        <div class="highlight-box">
+          <span class="highlight-box-icon">✓</span>
+          <p>ElementBuddy contains no advertisements and does not use any advertising frameworks or ad identifiers.</p>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="policy-section">
+        <div class="section-header">
+          <span class="section-num">06</span>
+          <h2>Children's Privacy</h2>
+        </div>
+        <p>ElementBuddy is designed for general audiences including children. Because the app collects no personal information whatsoever, it is compliant with the Children's Online Privacy Protection Act (COPPA) and similar regulations. No data from any user — child or adult — is collected or transmitted.</p>
+      </section>
+
+      <!-- 7 -->
+      <section class="policy-section">
+        <div class="section-header">
+          <span class="section-num">07</span>
+          <h2>Third-Party Services</h2>
+        </div>
+        <p>ElementBuddy does not integrate any third-party services, SDKs, or frameworks beyond Apple's own system frameworks. The only network-adjacent interaction is the App Store review prompt, which is initiated and controlled entirely by the iOS system when conditions are met.</p>
+      </section>
+
+      <!-- 8 -->
+      <section class="policy-section">
+        <div class="section-header">
+          <span class="section-num">08</span>
+          <h2>Your Rights</h2>
+        </div>
+        <p>Because ElementBuddy collects no personal data, there is nothing to access, correct, export, or delete on our end. All app data on your device can be removed at any time by deleting the app.</p>
+      </section>
+
+      <!-- 9 -->
+      <section class="policy-section">
+        <div class="section-header">
+          <span class="section-num">09</span>
+          <h2>Changes to This Policy</h2>
+        </div>
+        <p>If this privacy policy changes in a material way — for example, if a future version of the app were to add analytics — the updated policy will be posted here with a revised effective date, and the change will be noted in the App Store release notes.</p>
+        <p>Continued use of ElementBuddy after changes are posted constitutes acceptance of the updated policy.</p>
+      </section>
+
+
+    </div><!-- /content -->
+  </div><!-- /content-wrap -->
+
+  <!-- ── Footer ────────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <div class="footer-brand-icon">⚛️</div>
+      ElementBuddy
+    </div>
+    <nav class="footer-links">
+      <a href="index.html">Support Guide</a>
+      <a href="privacy.html" aria-current="page">Privacy Policy</a>
+    </nav>
+    <p class="footer-copy">© 2026 ElementBuddy. All rights reserved.</p>
+  </footer>
+
+</div><!-- /page -->
+</body>
+</html>
